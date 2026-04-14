@@ -58,7 +58,7 @@ def extract_embedding(image: np.ndarray) -> List[float]:
     try:
         result = DeepFace.represent(
             img_path=image,
-            model_name="Facenet512",
+            model_name="ArcFace",
             enforce_detection=True,
             detector_backend="opencv",
         )

@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 
 -- 2. Ensure the face_data table has the correct embedding column
 -- (Only run if you are creating the table fresh. Skip if it already exists.)
-/*
+
 CREATE TABLE IF NOT EXISTS face_data (
   id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id     UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS face_data (
 CREATE INDEX IF NOT EXISTS face_data_embedding_idx
   ON face_data USING ivfflat (embedding vector_cosine_ops)
   WITH (lists = 100);
-*/
+
 
 -- 3. Create the match_face RPC function (REQUIRED)
 CREATE OR REPLACE FUNCTION match_face(query_embedding vector(512), threshold float)

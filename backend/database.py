@@ -89,13 +89,17 @@ def find_closest_face(query_embedding: List[float], threshold: float = 0.75) -> 
 
 # ── Attendance ────────────────────────────────────────────────────────────────
 def _get_local_day_bounds(date_str: str) -> tuple[str, str]:
-    """Return timezone-aware ISO start and end bounds for a given YYYY-MM-DD string."""
+    """Return strict UTC ISO bounds for a given local YYYY-MM-DD string to bypass PostgREST URL encoding bugs."""
+    import datetime as dt
     y, m, d = map(int, date_str.split('-'))
-    start = datetime.now().astimezone().replace(
+    start_local = dt.datetime.now().astimezone().replace(
         year=y, month=m, day=d, hour=0, minute=0, second=0, microsecond=0
     )
-    end = start.replace(hour=23, minute=59, second=59, microsecond=999999)
-    return start.isoformat(), end.isoformat()
+    end_local = start_local.replace(hour=23, minute=59, second=59, microsecond=999999)
+    
+    start_utc = start_local.astimezone(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    end_utc = end_local.astimezone(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    return start_utc, end_utc
 
 
 def already_marked_today(user_id: str) -> bool:
