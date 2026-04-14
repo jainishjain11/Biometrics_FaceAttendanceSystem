@@ -44,7 +44,13 @@ export default function AttendanceTable({ records = [], loading = false, emptyMe
           {records.map((rec) => {
             const name  = rec.users?.name  || rec.user_name  || '—'
             const email = rec.users?.email || rec.user_email || '—'
-            const ts    = rec.created_at ? new Date(rec.created_at) : null
+            
+            // Force UTC parsing if Supabase dropped the timezone indicator
+            let dateStr = rec.created_at
+            if (dateStr && !dateStr.endsWith('Z') && !dateStr.includes('+')) {
+              dateStr += 'Z'
+            }
+            const ts = dateStr ? new Date(dateStr) : null
             const confidence = rec.confidence_score ?? 0
 
             return (
