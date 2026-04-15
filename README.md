@@ -20,34 +20,7 @@ A production-ready, real-time attendance system with **face recognition** and **
 ---
 
 ## Architecture
-
-```
-flowchart TD
-
-    %% Frontend
-    A[Frontend<br>React + Vite<br>Port 5173]
-
-    %% Backend
-    B[Backend API<br>FastAPI<br>Port 8000]
-
-    %% Database
-    C[(Supabase PostgreSQL<br>pgvector)]
-
-    %% ML Services
-    D[ML Service]
-    D1[DeepFace<br>Face Embedding]
-    D2[OpenCV<br>Face Detection]
-    D3[EAR Blink<br>Liveness Detection]
-
-    %% Flow
-    A -->|API Calls| B
-    B -->|Database Queries| C
-    B -->|Image Processing| D
-
-    D --> D1
-    D --> D2
-    D --> D3
-```
+![FaceAttend Architecture](./assets/architecture_biometrics.png)
 
 ---
 
