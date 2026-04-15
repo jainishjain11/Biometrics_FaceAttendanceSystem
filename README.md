@@ -22,15 +22,31 @@ A production-ready, real-time attendance system with **face recognition** and **
 ## Architecture
 
 ```
-┌─────────────────┐    HTTP/REST    ┌──────────────────┐    supabase-py    ┌────────────────┐
-│  React + Vite   │ ─────────────► │  FastAPI Backend  │ ────────────────► │ Supabase (PG)  │
-│  (Port 5173)    │                │  (Port 8000)      │                   │  pgvector      │
-└─────────────────┘                └──────────────────┘                   └────────────────┘
-                                          │
-                                   ML Pipeline
-                                   • DeepFace Facenet512
-                                   • OpenCV (dlib optional)
-                                   • EAR Blink Detection
+flowchart TD
+
+    %% Frontend
+    A[Frontend<br>React + Vite<br>Port 5173]
+
+    %% Backend
+    B[Backend API<br>FastAPI<br>Port 8000]
+
+    %% Database
+    C[(Supabase PostgreSQL<br>pgvector)]
+
+    %% ML Services
+    D[ML Service]
+    D1[DeepFace<br>Face Embedding]
+    D2[OpenCV<br>Face Detection]
+    D3[EAR Blink<br>Liveness Detection]
+
+    %% Flow
+    A -->|API Calls| B
+    B -->|Database Queries| C
+    B -->|Image Processing| D
+
+    D --> D1
+    D --> D2
+    D --> D3
 ```
 
 ---
