@@ -20,7 +20,7 @@ A production-ready, real-time attendance system with **face recognition** and **
 ---
 
 ## Architecture
-![FaceAttend Architecture](./assets/architecture_biometrics.png)
+![FaceAttend Architecture](./backend/assets/architecture_biometrics.png)
 
 ---
 
