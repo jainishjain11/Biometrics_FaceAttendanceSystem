@@ -11,7 +11,7 @@ from uuid import UUID
 from config import supabase, FACE_BUCKET
 
 
-# ── Users ─────────────────────────────────────────────────────────────────────
+# ── Users
 
 def get_user_by_email(email: str) -> Optional[Dict]:
     result = supabase.table("users").select("*").eq("email", email).execute()
@@ -45,7 +45,7 @@ def insert_user(name: str, email: str, password_hash: str, role: str = "user") -
     raise RuntimeError("Failed to insert user")
 
 
-# ── Face Data ─────────────────────────────────────────────────────────────────
+# ── Face Data
 
 def insert_face_data(user_id: str, embedding_list: List[float], image_url: str) -> Dict:
     """Insert a 512-dim embedding vector into face_data."""
@@ -87,7 +87,7 @@ def find_closest_face(query_embedding: List[float], threshold: float = 0.75) -> 
         raise RuntimeError(f"pgvector RPC failed: {exc}") from exc
 
 
-# ── Attendance ────────────────────────────────────────────────────────────────
+# ── Attendance 
 def _get_local_day_bounds(date_str: str) -> tuple[str, str]:
     """Return strict UTC ISO bounds for a given local YYYY-MM-DD string to bypass PostgREST URL encoding bugs."""
     import datetime as dt
@@ -146,7 +146,7 @@ def get_today_attendance() -> List[Dict]:
     return get_attendance(for_date=today)
 
 
-# ── Supabase Storage ──────────────────────────────────────────────────────────
+# ── Supabase Storage 
 
 def upload_face_image(file_bytes: bytes, filename: str, content_type: str = "image/jpeg") -> str:
     """Upload image bytes to Supabase Storage and return the public URL."""

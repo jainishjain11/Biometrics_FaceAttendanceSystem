@@ -19,7 +19,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# ── App ───────────────────────────────────────────────────────────────────────
+# App
 app = FastAPI(
     title="Face Attendance System API",
     description="Production-ready Face Recognition Attendance System with Liveness Detection",
@@ -28,7 +28,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -41,13 +41,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Routers ───────────────────────────────────────────────────────────────────
+# Routers
 app.include_router(auth_router)
 app.include_router(face_router)
 app.include_router(attendance_router)
 
 
-# ── Health ────────────────────────────────────────────────────────────────────
+#  Health
 @app.get("/", tags=["Health"])
 async def root():
     return {
